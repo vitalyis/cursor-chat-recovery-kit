@@ -1,0 +1,38 @@
+# Backup directories (user data - do not commit)
+cursor_backups/
+*.backup
+*.backup_*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+session_log.txt
+
+# Temporary files
+*.tmp
+*.swp
+*~
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Test outputs
+test_output/
+*.test
