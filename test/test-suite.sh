@@ -141,6 +141,13 @@ test_help_output() {
     else
         test_fail "emergency_recovery.sh help not working"
     fi
+
+    output=$("$BIN_DIR/relocate_cursor_project.sh" 2>&1 | sed 's/\x1b\[[0-9;]*m//g')
+    if echo "$output" | grep -qiE "(Relocation Tool|Project-aware|preflight|move|Commands)"; then
+        test_pass "relocate_cursor_project.sh shows help"
+    else
+        test_fail "relocate_cursor_project.sh help not working"
+    fi
     
     # Test other scripts
     for script in quick_backup.sh convert_chats_to_markdown.sh session_logger.sh; do

@@ -13,6 +13,25 @@ When you rename a project folder in Cursor, the workspace ID changes and your ch
 
 ## Quick Start
 
+### Moving a Repo Without Losing Cursor Context
+
+If you are moving a git-backed project to a new folder and want to preserve more
+than `state.vscdb`, use the relocation tool first:
+
+```bash
+./bin/relocate_cursor_project.sh preflight /Users/me/OldRepo /Users/me/Projects/OldRepo
+./bin/relocate_cursor_project.sh move /Users/me/OldRepo /Users/me/Projects/OldRepo --apply
+```
+
+This handles:
+- matching `workspaceStorage` backups for the project path
+- matching `~/.cursor/projects/...` transcript and tool-log folders
+- linked git worktree moves before the main repo move
+- default old-path symlink recreation for Cursor compatibility
+
+If Cursor later creates a brand-new workspace ID for the new path, reopen the
+project once and then use the migration flow below to seed the new workspace.
+
 ### Setup (One-Time)
 
 For convenient access from anywhere, install shell aliases:

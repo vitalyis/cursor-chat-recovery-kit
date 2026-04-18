@@ -52,6 +52,18 @@ Protect yourself from future issues:
 
 > This creates backups every 4 hours automatically.
 
+## Move a Repo Safely
+
+If you are reorganizing your projects on disk and want to keep Cursor history:
+
+```bash
+cursor-relocate preflight /Users/me/OldRepo /Users/me/Projects/OldRepo
+cursor-relocate move /Users/me/OldRepo /Users/me/Projects/OldRepo --apply
+```
+
+This preserves matching Cursor workspace data, transcript/tool-log folders, and
+linked git worktrees.
+
 ## Common Commands
 
 ### Migration
@@ -60,6 +72,7 @@ Protect yourself from future issues:
 cursor-migrate 'Old' 'New'    # Migrate chat history
 cursor-backups                 # List backups
 cursor-workspaces               # List workspaces
+cursor-relocate preflight <old> <new>  # Preview repo move
 ```
 
 ### Backup

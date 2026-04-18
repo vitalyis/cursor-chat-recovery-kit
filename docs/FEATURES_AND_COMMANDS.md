@@ -32,6 +32,24 @@ cursor-backup          # Quick backup
 cursor-backups         # List available backups
 ```
 
+## Project Relocation
+
+Safely move a git-backed project without losing Cursor workspace state, transcript
+folders, or linked worktrees:
+
+```bash
+cursor-relocate preflight /Users/me/OldRepo /Users/me/Projects/OldRepo
+cursor-relocate move /Users/me/OldRepo /Users/me/Projects/OldRepo --apply
+```
+
+### Relocation Features
+
+- Finds matching `workspaceStorage` entries for the repo path
+- Backs up matching `~/.cursor/projects/...` transcript and tool-log folders
+- Moves linked git worktrees before moving the main repo
+- Recreates the old repo path as a symlink by default for Cursor compatibility
+- Supports dry-run previews before any filesystem changes
+
 ## Emergency Recovery
 
 Recover from complete workspace corruption:
@@ -87,6 +105,8 @@ cursor-workspaces 20251219_160000    # List workspaces in backup
 | `cursor-backup` | Create quick manual backup |
 | `cursor-backups` | List all available backups |
 | `./bin/export_cursor_chats.sh` | Full backup with manifest |
+| `cursor-relocate preflight <old> <new>` | Preview repo relocation resources and worktree moves |
+| `cursor-relocate move <old> <new> [--apply]` | Relocate repo, matching Cursor state, and linked worktrees |
 | `./bin/setup_cron.sh` | Set up automatic backups (every 4 hours) |
 
 </div>
@@ -124,4 +144,3 @@ cursor-workspaces 20251219_160000    # List workspaces in backup
 <br>
 
 **Made with ❤️ for the Cursor community**
-

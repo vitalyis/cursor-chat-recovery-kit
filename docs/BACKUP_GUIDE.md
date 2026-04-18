@@ -10,6 +10,7 @@ Regular backups protect your chat history and workspace data from loss. This gui
 - Creating manual backups
 - Managing backup storage
 - Understanding backup structure
+- Capturing project-scoped relocation backups for repo moves
 
 ## Quick Setup
 
@@ -130,6 +131,26 @@ Complete backup with manifest:
 - Size information
 - Detailed logging
 
+### Project Relocation Backup
+
+Create a project-scoped backup before moving a git repository:
+
+```bash
+./bin/relocate_cursor_project.sh backup /Users/me/MyRepo
+```
+
+This captures:
+- matching `workspaceStorage` folders for the repo path
+- matching `~/.cursor/projects/...` transcript and tool-log folders
+- git worktree topology and repo metadata
+- a JSON/text manifest under `~/cursor_backups/project_relocations/`
+
+Use `preflight` first if you want to inspect what will be captured:
+
+```bash
+./bin/relocate_cursor_project.sh preflight /Users/me/MyRepo /Users/me/Projects/MyRepo
+```
+
 ## Automation
 
 ### Cron Setup
@@ -209,6 +230,7 @@ du -sh ~/cursor_backups/cursor_exports/20251219_160000
 3. **Verify Backups** - Periodically check backup integrity
 4. **Monitor Storage** - Ensure sufficient disk space
 5. **Test Restores** - Verify you can restore from backups
+6. **Use project-scoped backups before repo moves** - especially when Cursor transcripts or git worktrees matter
 
 ## Storage Considerations
 

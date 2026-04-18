@@ -56,6 +56,9 @@ echo "$output" | grep -qi "Migration\|Usage" && test_pass "restore_chat_history.
 output=$("$BIN_DIR/emergency_recovery.sh" 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | head -3)
 echo "$output" | grep -qi "EMERGENCY\|RECOVERY" && test_pass "emergency_recovery.sh help" || test_fail "emergency_recovery.sh help"
 
+output=$("$BIN_DIR/relocate_cursor_project.sh" 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | head -5)
+echo "$output" | grep -qi "Relocation\|Project-aware\|Commands" && test_pass "relocate_cursor_project.sh help" || test_fail "relocate_cursor_project.sh help"
+
 # Check dependencies
 echo ""
 echo "Checking dependencies..."

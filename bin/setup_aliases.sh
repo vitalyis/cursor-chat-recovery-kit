@@ -36,6 +36,7 @@ alias cursor-emergency='$SCRIPT_DIR/emergency_recovery.sh'
 alias cursor-backup='$SCRIPT_DIR/quick_backup.sh'
 alias cursor-backups='$SCRIPT_DIR/restore_chat_history.sh list-backups'
 alias cursor-workspaces='$SCRIPT_DIR/restore_chat_history.sh list-workspaces'
+alias cursor-relocate='$SCRIPT_DIR/relocate_cursor_project.sh'
 EOF
 
 echo "✅ Aliases added to $SHELL_RC"
@@ -47,5 +48,6 @@ echo "  cursor-emergency [command]           - Emergency recovery tool"
 echo "  cursor-backup                        - Manual backup trigger"
 echo "  cursor-backups                       - List available backups"
 echo "  cursor-workspaces                    - List current workspaces"
+echo "  cursor-relocate [command]            - Project-aware repo relocation"
 echo ""
 echo "🔄 Run 'source $SHELL_RC' or restart your terminal to use these commands."
