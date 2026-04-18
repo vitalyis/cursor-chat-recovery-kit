@@ -1,11 +1,15 @@
 #!/bin/bash
+set -euo pipefail
+
+# shellcheck source=bin/lib/cursor_paths.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/cursor_paths.sh"
 
 echo "🚨 EMERGENCY CURSOR WORKSPACE RECOVERY"
 echo "======================================"
 echo "⚠️  Use this script when Cursor workspace is corrupted or lost"
 echo ""
 
-CURSOR_STORAGE="$HOME/Library/Application Support/Cursor/User"
+CURSOR_STORAGE="$(cursor_user_dir)"
 BACKUP_DIR="$HOME/cursor_backups/cursor_exports"
 
 # Function to list available backups
@@ -32,6 +36,7 @@ diagnose_workspace() {
     
     if [ ! -d "$CURSOR_STORAGE" ]; then
         echo "❌ CRITICAL: Cursor User directory missing: $CURSOR_STORAGE"
+        print_cursor_path_hint
         return 1
     fi
     

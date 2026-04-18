@@ -1,12 +1,17 @@
 #!/bin/bash
+set -euo pipefail
+
+# shellcheck source=bin/lib/cursor_paths.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/cursor_paths.sh"
 
 echo "🛡️ CURSOR WORKSPACE BACKUP SYSTEM"
 echo "================================="
 
 TIMESTAMP=$(date "+%Y%m%d_%H%M%S")
 BACKUP_DIR="$HOME/cursor_backups"
-CURSOR_STORAGE="$HOME/Library/Application Support/Cursor/User"
+CURSOR_STORAGE="$(cursor_user_dir)"
 EXPORT_DIR="$BACKUP_DIR/cursor_exports/$TIMESTAMP"
+WORKSPACE_STORAGE="$CURSOR_STORAGE/workspaceStorage"
 
 echo "📅 Backup timestamp: $TIMESTAMP"
 echo "📁 Export location: $EXPORT_DIR"
@@ -18,13 +23,16 @@ mkdir -p "$EXPORT_DIR"
 echo "🔄 Exporting Cursor workspace data..."
 
 # Copy all workspace storage (contains individual workspace databases)
-if [ -d "$CURSOR_STORAGE/workspaceStorage" ]; then
+if [ -d "$WORKSPACE_STORAGE" ]; then
     echo "  📦 Copying workspaceStorage..."
-    cp -r "$CURSOR_STORAGE/workspaceStorage" "$EXPORT_DIR/"
+    cp -r "$WORKSPACE_STORAGE" "$EXPORT_DIR/"
     ws_size=$(du -sh "$EXPORT_DIR/workspaceStorage" | cut -f1)
     echo "  ✅ Workspace storage: $ws_size"
 else
-    echo "  ❌ workspaceStorage not found"
+    echo "  ❌ workspaceStorage not found at: $WORKSPACE_STORAGE"
+    print_cursor_path_hint
+    rm -rf "$EXPORT_DIR"
+    exit 1
 fi
 
 # Copy global storage (contains cross-workspace data)

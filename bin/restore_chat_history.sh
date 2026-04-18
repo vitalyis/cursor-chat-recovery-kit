@@ -1,8 +1,12 @@
 #!/bin/bash
 # Chat History Migration & Recovery Script
 # Migrates Cursor chat history between workspaces or restores from backups
+set -euo pipefail
 
-CURSOR_STORAGE="$HOME/Library/Application Support/Cursor/User"
+# shellcheck source=bin/lib/cursor_paths.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/cursor_paths.sh"
+
+CURSOR_STORAGE="$(cursor_user_dir)"
 BACKUP_DIR="$HOME/cursor_backups/cursor_exports"
 
 # Colors for output
@@ -26,6 +30,8 @@ find_workspace_by_path() {
     local search_path="$1"
     local storage_dir="$2"
     
+    [ -d "$storage_dir" ] || return 1
+
     for ws_dir in "$storage_dir"/*/; do
         if [ -f "$ws_dir/workspace.json" ]; then
             if grep -q "$search_path" "$ws_dir/workspace.json" 2>/dev/null; then
@@ -59,11 +65,17 @@ list_workspaces() {
     local storage_dir="$1"
     echo -e "${BLUE}📂 Available workspaces:${NC}"
     echo "======================"
+
+    if [ ! -d "$storage_dir" ]; then
+        echo -e "${RED}❌ workspaceStorage not found at: $storage_dir${NC}"
+        print_cursor_path_hint
+        return 1
+    fi
     
     for ws_dir in "$storage_dir"/*/; do
         if [ -f "$ws_dir/workspace.json" ]; then
             ws_id=$(basename "$ws_dir")
-            ws_path=$(grep -o '"folder":.*' "$ws_dir/workspace.json" | sed 's/"folder": "file:\/\/\(.*\)"/\1/' | sed 's/%20/ /g')
+            ws_path=$(sed -n 's/.*"folder":[[:space:]]*"file:\/\/\(.*\)".*/\1/p' "$ws_dir/workspace.json" | sed 's/%20/ /g')
             ws_size=$(du -sh "$ws_dir" 2>/dev/null | cut -f1)
             db_size=$(du -sh "$ws_dir/state.vscdb" 2>/dev/null | cut -f1 || echo "N/A")
             echo "  🔹 $ws_id"
@@ -142,7 +154,13 @@ auto_migrate() {
     
     local backup_storage="$BACKUP_DIR/$backup_date/workspaceStorage"
     if [ ! -d "$backup_storage" ]; then
-        echo -e "${RED}❌ Backup not found: $backup_date${NC}"
+        if [ -d "$BACKUP_DIR/$backup_date" ]; then
+            echo -e "${RED}❌ Backup exists but has no workspaceStorage: $backup_date${NC}"
+            echo "The backup was likely created with the wrong Cursor data path."
+            print_cursor_path_hint
+        else
+            echo -e "${RED}❌ Backup not found: $backup_date${NC}"
+        fi
         exit 1
     fi
     
@@ -155,12 +173,19 @@ auto_migrate() {
     echo -e "${GREEN}✅ Found source workspace: $source_ws_id${NC}"
     
     # Find target workspace in current storage
-    local target_ws_id=$(find_workspace_by_path "$new_path" "$CURSOR_STORAGE/workspaceStorage")
+    local target_storage="$CURSOR_STORAGE/workspaceStorage"
+    if [ ! -d "$target_storage" ]; then
+        echo -e "${RED}❌ Current workspaceStorage not found at: $target_storage${NC}"
+        print_cursor_path_hint
+        exit 1
+    fi
+
+    local target_ws_id=$(find_workspace_by_path "$new_path" "$target_storage")
     if [ -z "$target_ws_id" ]; then
         echo -e "${RED}❌ Could not find workspace for: $new_path${NC}"
         exit 1
     fi
-    local target_ws="$CURSOR_STORAGE/workspaceStorage/$target_ws_id"
+    local target_ws="$target_storage/$target_ws_id"
     echo -e "${GREEN}✅ Found target workspace: $target_ws_id${NC}"
     echo ""
     
@@ -192,7 +217,7 @@ case "${1:-help}" in
         list_backups
         ;;
     "list-workspaces")
-        if [ -z "$2" ]; then
+        if [ -z "${2:-}" ]; then
             echo "Listing current workspaces:"
             list_workspaces "$CURSOR_STORAGE/workspaceStorage"
         else
@@ -202,7 +227,7 @@ case "${1:-help}" in
         fi
         ;;
     "find")
-        if [ -z "$2" ]; then
+        if [ -z "${2:-}" ]; then
             echo "Usage: $0 find <folder_path>"
             exit 1
         fi
@@ -213,6 +238,7 @@ case "${1:-help}" in
             echo "Full path: $CURSOR_STORAGE/workspaceStorage/$ws_id"
         else
             echo -e "${RED}❌ Workspace not found for: $2${NC}"
+            print_cursor_path_hint
         fi
         ;;
     *)

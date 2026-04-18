@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# shellcheck source=bin/lib/cursor_paths.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/cursor_paths.sh"
+
 # === Настройки ===
-WS_BASE="$HOME/Library/Application Support/Cursor/User/workspaceStorage"
+WS_BASE="$(cursor_workspace_storage_dir)"
 
 # Какие файлы считаем чатами (разные версии Cursor):
 CHAT_PATTERNS=(
@@ -30,7 +33,7 @@ Cursor Chat Recover — утилита для поиска и восстанов
   ./cursor-chat-recover.sh guess-latest
 
 Примечания:
-- Путь: ~/Library/Application Support/Cursor/User/workspaceStorage
+- Путь: $(cursor_workspace_storage_dir)
 - По умолчанию copy работает в режиме dry-run. Добавь --apply, чтобы реально копировать.
 - Перед копированием закрой Cursor.
 EOF

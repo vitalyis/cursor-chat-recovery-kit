@@ -1,11 +1,14 @@
 #!/bin/bash
 set -euo pipefail
 
-CURSOR_USER_DIR="${HOME}/Library/Application Support/Cursor/User"
-WORKSPACE_STORAGE_DIR="${CURSOR_USER_DIR}/workspaceStorage"
-CURSOR_PROJECTS_DIR="${HOME}/.cursor/projects"
-BACKUP_ROOT="${HOME}/cursor_backups/project_relocations"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=bin/lib/cursor_paths.sh
+source "$SCRIPT_DIR/lib/cursor_paths.sh"
+
+CURSOR_USER_DIR="$(cursor_user_dir)"
+WORKSPACE_STORAGE_DIR="${CURSOR_USER_DIR}/workspaceStorage"
+CURSOR_PROJECTS_DIR="$(cursor_projects_dir)"
+BACKUP_ROOT="${HOME}/cursor_backups/project_relocations"
 
 blue() { printf "\033[0;34m%s\033[0m\n" "$*"; }
 green() { printf "\033[0;32m%s\033[0m\n" "$*"; }
@@ -79,6 +82,7 @@ file_uri_path() {
 ensure_cursor_storage() {
     if [[ ! -d "$WORKSPACE_STORAGE_DIR" ]]; then
         red "❌ Cursor workspaceStorage not found: $WORKSPACE_STORAGE_DIR"
+        print_cursor_path_hint
         exit 1
     fi
 }
