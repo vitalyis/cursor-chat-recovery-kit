@@ -22,7 +22,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 BIN_DIR="$REPO_ROOT/bin"
 
 # Test sandbox
-TEST_SANDBOX="$REPO_ROOT/test/sandbox"
+TEST_SANDBOX="$REPO_ROOT/tests/sandbox"
 TEST_CURSOR_STORAGE="$TEST_SANDBOX/cursor_storage"
 TEST_BACKUP_DIR="$TEST_SANDBOX/backups"
 

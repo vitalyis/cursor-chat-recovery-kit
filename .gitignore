@@ -36,3 +36,4 @@ session_log.txt
 # Test outputs
 test_output/
 *.test
+tests/sandbox/

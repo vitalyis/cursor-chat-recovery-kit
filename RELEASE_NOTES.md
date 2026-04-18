@@ -1,6 +1,6 @@
 # Cursor Chat Recovery Kit - Release Notes
 
-## Version 1.1.0
+## Version 2.0.0
 
 **Release Date:** 2026-04-18
 
@@ -8,7 +8,8 @@
 
 This release adds project-aware repo relocation, covering the pieces that simple
 chat migration misses: linked git worktrees, matching Cursor transcript/tool-log
-folders, and a safer dry-run-first move workflow.
+folders, and a safer dry-run-first move workflow. It also cleans up the repo
+layout and standardizes the test directory naming.
 
 ### Highlights
 
@@ -17,6 +18,8 @@ folders, and a safer dry-run-first move workflow.
 - Linked git worktree relocation support
 - Default old-path symlink recreation for Cursor compatibility after repo moves
 - New `cursor-relocate` shell alias
+- `test/` renamed to `tests/`
+- Root docs cleaned up and structure docs synced to the actual repo layout
 - Expanded docs for relocation and repo move workflows
 
 ### Example

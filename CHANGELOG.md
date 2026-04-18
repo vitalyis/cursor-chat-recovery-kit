@@ -2,7 +2,7 @@
 
 All notable changes to Cursor Chat Recovery Kit are documented here.
 
-## 1.1.0 - 2026-04-18
+## 2.0.0 - 2026-04-18
 
 ### Added
 
@@ -15,7 +15,9 @@ All notable changes to Cursor Chat Recovery Kit are documented here.
 ### Changed
 
 - Expanded docs and quickstart guidance to cover safe repo moves, project-scoped backups, and relocation workflows.
-- Updated release notes for the 1.1.0 toolkit release.
+- Reorganized `test/` to `tests/`.
+- Cleaned the repo root docs and aligned repository structure docs with reality.
+- Updated release notes for the 2.0.0 toolkit release.
 
 ## 1.0.0 - 2026-01
 

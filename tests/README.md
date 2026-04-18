@@ -5,7 +5,7 @@ Comprehensive test suite for validating Cursor Chat Recovery Kit functionality.
 ## Running Tests
 
 ```bash
-./test/test-suite.sh
+./tests/test-suite.sh
 ```
 
 ## What Gets Tested

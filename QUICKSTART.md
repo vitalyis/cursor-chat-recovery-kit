@@ -7,7 +7,7 @@
 ### 1. Download or Clone
 
 ```bash
-   git clone https://github.com/vitalyis/cursor-chat-recovery-kit.git
+git clone https://github.com/vitalyis/cursor-chat-recovery-kit.git
 cd cursor-chat-recovery-kit
 ```
 

@@ -58,13 +58,13 @@
 
 ### Quick Validation (Recommended)
 ```bash
-./test/quick-validate.sh
+./tests/quick-validate.sh
 ```
 Fast checks that complete in seconds.
 
 ### Full Test Suite
 ```bash
-./test/test-suite.sh
+./tests/test-suite.sh
 ```
 Comprehensive tests including dry-run operations.
 

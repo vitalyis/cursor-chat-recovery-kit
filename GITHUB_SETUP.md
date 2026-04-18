@@ -1,5 +1,8 @@
 # GitHub Repository Setup Guide
 
+This repo is already live on GitHub. Use this guide as a publish/update checklist
+for the current layout and release flow.
+
 ## Step-by-Step Instructions
 
 ### 1. Create the GitHub Repository
@@ -14,33 +17,11 @@
 ### 2. Initialize Local Git Repository
 
 ```bash
-cd /Users/vitaly/QuickCal/cursor-chat-recovery-kit
-
-# Initialize git (if not already done)
-git init
-
-# Add all files
+cd /Users/vitaly/cursor-chat-recovery-kit
+git status
 git add .
-
-# Create initial commit
-git commit -m "Initial release: Cursor Chat Recovery Kit v1.0.0
-
-Features:
-- Smart chat history migration between renamed folders
-- Automated backup system with cron support
-- Emergency workspace recovery
-- Chat export to Markdown format
-- Comprehensive workspace discovery tools
-- Full documentation and test suite
-
-Tested with Cursor v2.3.29 on macOS"
-
-# Add remote (replace vitalyis with your GitHub username)
-git remote add origin https://github.com/vitalyis/cursor-chat-recovery-kit.git
-
-# Push to GitHub
-git branch -M main
-git push -u origin main
+git commit -m "release: v2.0.0"
+git push origin main
 ```
 
 ### 3. Verify GitHub Username
@@ -56,8 +37,8 @@ find . -type f -name "*.md" -exec sed -i '' 's/vitalyis/YOUR_USERNAME/g' {} +
 
 1. Go to your repository on GitHub
 2. Click "Releases" → "Create a new release"
-3. **Tag version:** `v1.0.0`
-4. **Release title:** `Cursor Chat Recovery Kit v1.0.0 - Initial Release`
+3. **Tag version:** `v2.0.0`
+4. **Release title:** `Cursor Chat Recovery Kit v2.0.0`
 5. **Description:** Copy content from `RELEASE_NOTES.md`
 6. Check "Set as the latest release"
 7. Click "Publish release"
@@ -86,12 +67,12 @@ Recover and migrate your Cursor IDE chat history when workspace folders are rena
 ## Pre-Publish Checklist
 
 - [x] Username updated to `vitalyis` in all files
-- [x] Verify all scripts are executable — ✅ All 11 scripts have executable permissions
-- [x] Run test suite: `./test/quick-validate.sh` — ✅ All 31 checks passed
+- [x] Verify all scripts are executable — ✅ All 12 scripts have executable permissions
+- [x] Run test suite: `./tests/quick-validate.sh`
 - [x] Review RELEASE_NOTES.md content — ✅ Reviewed and validated
 - [x] Check that cover image displays correctly — ✅ PNG exists (1200x630, 102KB)
 - [x] Verify all documentation links work — ✅ All 8 documentation files exist and are linked correctly
-- [x] Test installation instructions — ✅ All commands verified, 11 scripts present and executable
+- [x] Test installation instructions — ✅ All commands verified, 12 scripts present and executable
 
 ## Post-Publish Tasks
 
@@ -127,18 +108,15 @@ Recover and migrate your Cursor IDE chat history when workspace folders are rena
 
 ```bash
 # Navigate to repo
-cd /Users/vitaly/QuickCal/cursor-chat-recovery-kit
+cd /Users/vitaly/cursor-chat-recovery-kit
 
 # Update username in files (replace vitalyis)
 find . -type f -name "*.md" -exec sed -i '' 's/vitalyis/YOUR_ACTUAL_USERNAME/g' {} +
 
 # Initialize and push
-git init
 git add .
-git commit -m "Initial release: Cursor Chat Recovery Kit v1.0.0"
-git remote add origin https://github.com/vitalyis/cursor-chat-recovery-kit.git
-git branch -M main
-git push -u origin main
+git commit -m "release: v2.0.0"
+git push origin main
 ```
 
 ---
