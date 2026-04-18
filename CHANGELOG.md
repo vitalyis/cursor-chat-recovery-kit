@@ -2,6 +2,14 @@
 
 All notable changes to Cursor Chat Recovery Kit are documented here.
 
+## 2.0.1 - 2026-04-18
+
+### Fixed
+
+- Fixed Cursor data path detection outside macOS, especially on Linux/Ubuntu.
+- Made backup commands fail fast when `workspaceStorage` is missing instead of creating misleading empty backups.
+- Improved migration and recovery error messages with explicit path override hints.
+
 ## 2.0.0 - 2026-04-18
 
 ### Added
